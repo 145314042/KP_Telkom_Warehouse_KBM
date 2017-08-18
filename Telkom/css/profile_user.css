@@ -1,0 +1,33 @@
+/* my positioning css */
+._profile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -5em 0 0 -5em;
+}
+
+/* main icon */
+._profile {
+	height: 10em; /* height == width */
+	width: 10em;
+	border: 2px solid #666;
+	border-radius: 50%;
+	overflow: hidden;
+}
+/* profile head */
+._head {
+	background: #666;
+	border-radius: 100%;
+	width: 45%;
+	height: 45%;
+	margin: 15% auto 5%;
+}
+/* profile body */
+._body {
+	background: #666;
+	width: 65%;
+	height: 40%;
+	margin: auto;
+	border-top-left-radius: 50%;
+	border-top-right-radius: 50%;
+}

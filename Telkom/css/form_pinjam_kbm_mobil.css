@@ -1,0 +1,50 @@
+/* CodePen demo */
+
+
+.big {
+  font-size: 1.2em;
+  
+}
+/* Custom dropdown */
+.custom-dropdown {
+  position: relative;
+
+  margin: 10px; /* demo only */
+}
+
+.custom-dropdown select {
+  background-color: #fff;
+  color: #000;
+  font-size: inherit;
+  padding-right: 2.5em;	
+  border: 0;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+   /* hide default arrow in chrome OSX */
+}
+
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+
+.custom-dropdown select[disabled] {
+  color: rgba(0,0,0,.3);
+}
+
+.custom-dropdown select[disabled]::after {
+  color: rgba(0,0,0,.1);
+}
+
+.custom-dropdown::before {
+  background-color: rgba(0,0,0,.15);
+}
+
+.custom-dropdown::after {
+  color: rgba(0,0,0,.4);
+}
