@@ -19,17 +19,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <table style="width:80%;text-align:center;">
   <tr>
     <th>Peminjam</th>
+    <th>NIK</th>
     <th>Nomor Telepon</th>
     <th>Mobil</th> 
     <th>Keperluan</th>
-    <th>Durasi</th>
+    <th>Durasi (Jam)</th>
     <th>Tanggal Pinjam</th>
     <th>Waktu Pinjam</th>
+    <th>KM Ambil</th>
     <th>Aksi</th>
   </tr>
   <?php foreach ($showBooking as $row): ?>
     <?php
     $Peminjam = $row->Peminjam;
+    $NIK = $row->NIK;
     $NomorTelepon = $row->NomorTelepon;
     $NomorPolisi = $row->NomorPolisi;
     $Keperluan = $row->Keperluan;
@@ -40,6 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     ?>
     <tr>
       <td><?php echo $Peminjam;?></td>
+      <td><?php echo $NIK;?></td>
       <td><?php echo $NomorTelepon;?></td>
       <td><?php echo $NomorPolisi;?></td>
       <td><?php echo $Keperluan;?></td>
@@ -48,8 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <td><?php echo $WaktuPinjam;?></td>
       <td>
           <form method="POST" action='<?php echo site_url('welcome/kbm_approve_booking') ?>'>
+              <?php echo '<input placeholder="KM Ambil" type="text" pattern="[0-9]*" name="kmAmbil" title="Hanya boleh angka" required>';?>
               <?php echo '<input type="hidden" name="nomorPolisi" value="'.$NomorPolisi.'">';?>
               <?php echo '<input type="hidden" name="peminjam" value="'.$Peminjam.'">';?>
+              <?php echo '<input type="hidden" name="nik" value="'.$NIK.'">';?>
               <?php echo '<input type="hidden" name="nomorTelepon" value="'.$NomorTelepon.'">';?>
               <?php echo '<input type="hidden" name="keperluan" value="'.$Keperluan.'">';?>
               <?php echo '<input type="hidden" name="durasi" value="'.$Durasi.'">';?>
@@ -61,6 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <form method="POST" action='<?php echo site_url('welcome/kbm_decline_booking') ?>'>
               <?php echo '<input type="hidden" name="nomorPolisi" value="'.$NomorPolisi.'">';?>
               <?php echo '<input type="hidden" name="peminjam" value="'.$Peminjam.'">';?>
+              <?php echo '<input type="hidden" name="nik" value="'.$NIK.'">';?>
               <?php echo '<input type="hidden" name="nomorTelepon" value="'.$NomorTelepon.'">';?>
               <?php echo '<input type="hidden" name="keperluan" value="'.$Keperluan.'">';?>
               <?php echo '<input type="hidden" name="durasi" value="'.$Durasi.'">';?>

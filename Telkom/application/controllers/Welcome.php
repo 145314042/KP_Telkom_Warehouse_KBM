@@ -43,17 +43,21 @@ class Welcome extends CI_Controller {
         $waktuPinjamCombine = $this->input->post('waktuPinjam_jam',true).":".$this->input->post('waktuPinjam_menit',true);
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
+        $nik = $this->input->post('nik',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
+        $kmAmbil = '';
+        $kmKembali = '';
         $durasi = $this->input->post('durasi',true);
         $tanggalPinjam = $this->input->post('tanggalPinjam',true);
         $waktuPinjam = $waktuPinjamCombine;
-        $tanggalKembali = $this->kbm_model->getLocalDate();
-        $waktuKembali = $this->kbm_model->getLocalTime();
+        $waktuAmbil = '';
+        $tanggalKembali = '';
+        $waktuKembali = '';
         $pemberi = '';
         $status = 0;
         /*get result*/
-        $result = $this->kbm_model->insertRent($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $tanggalKembali, $waktuKembali, $pemberi, $status);
+        $result = $this->kbm_model->insertRent($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $tanggalKembali, $waktuKembali, $pemberi, $status);
         if($result==1)
         {
             /*insert berhasil*/
@@ -71,15 +75,16 @@ class Welcome extends CI_Controller {
     {
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
+        $nik = $this->input->post('nik',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
+        $kmAmbil = $this->input->post('kmAmbil',true);
         $durasi = $this->input->post('durasi',true);
         $tanggalPinjam = $this->input->post('tanggalPinjam',true);
         $waktuPinjam = $this->input->post('waktuPinjam',true);
         $pemberi = $this->input->post('pemberi',true);
-        echo $nomorPolisi.$peminjam.$nomorTelepon.$keperluan.'sss'.$durasi.'sss'.$tanggalPinjam.$waktuPinjam.$pemberi;
         /*get result*/
-        $result = $this->kbm_model->approveBooking($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
+        $result = $this->kbm_model->approveBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
         if($result>0)
         {
             /*approve berhasil*/
@@ -97,6 +102,7 @@ class Welcome extends CI_Controller {
     {
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
+        $nik = $this->input->post('nik',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
         $durasi = $this->input->post('durasi',true);
@@ -104,7 +110,7 @@ class Welcome extends CI_Controller {
         $waktuPinjam = $this->input->post('waktuPinjam',true);
         $pemberi = $this->input->post('pemberi',true);
         /*get result*/
-        $result = $this->kbm_model->declineBooking($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
+        $result = $this->kbm_model->declineBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
 
         if($result>0)
         {
@@ -134,14 +140,17 @@ class Welcome extends CI_Controller {
     {
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
+        $nik = $this->input->post('nik',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
+        $kmKembali = $this->input->post('kmKembali',true);
         $durasi = $this->input->post('durasi',true);
         $tanggalPinjam = $this->input->post('tanggalPinjam',true);
         $waktuPinjam = $this->input->post('waktuPinjam',true);
+        $waktuAmbil = $this->input->post('waktuAmbil',true);
         $pemberi = $this->input->post('pemberi',true);
         /*get result*/
-        $result = $this->kbm_model->carReturning($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
+        $result = $this->kbm_model->carReturning($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi);
         if($result==1)
         {
             /*insert berhasil*/
@@ -185,11 +194,27 @@ class Welcome extends CI_Controller {
 
     public function history()
     {
-        $result = $this->kbm_model->showHistory();
-        $data['showHistory'] = $result;
-        $this->load->view('history',$data);/*di load ke admin >> history peminjaman*/
-            /*CAUTION!! pada view, bagian Status harus diperhatikan*/
+        $result = $this->kbm_model->showHistoryApprove();
+        $data['showHistoryApprove'] = $result;
+        $result2 = $this->kbm_model->showHistoryDisapprove();
+        $data2['showHistoryDisapprove'] = $result2;
+        $this->load->view('history',$data);
     }
+
+    public function history_terima()
+    {
+        $result = $this->kbm_model->showHistoryApprove();
+        $data['showHistoryApprove'] = $result;
+        $this->load->view('history_terima',$data);
+    }
+
+    public function history_tolak()
+    {
+        $result = $this->kbm_model->showHistoryDisapprove();
+        $data['showHistoryDisapprove'] = $result;
+        $this->load->view('history_tolak',$data);
+    }
+
     public function peminjaman()
     {
         $result = $this->kbm_model->showBooking();
@@ -203,25 +228,25 @@ class Welcome extends CI_Controller {
     }
 
 
-    //Export PDF
+   //Export PDF
 
-    // public function toPdf(){
-    //     $this->load->library('Pdf');
+    public function toPdf(){
+        $this->load->library('Pdf');
 
-    //     $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-    //     $pdf->SetTitle('My Title');
-    //     $pdf->SetHeaderMargin(30);
-    //     $pdf->SetTopMargin(20);
-    //     $pdf->setFooterMargin(20);
-    //     $pdf->SetAutoPageBreak(true);
-    //     $pdf->SetAuthor('Author');
-    //     $pdf->SetDisplayMode('real', 'default');
+        $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetTitle('My Title');
+        $pdf->SetHeaderMargin(30);
+        $pdf->SetTopMargin(20);
+        $pdf->setFooterMargin(20);
+        $pdf->SetAutoPageBreak(true);
+        $pdf->SetAuthor('Author');
+        $pdf->SetDisplayMode('real', 'default');
 
-    //     $pdf->AddPage();
+        $pdf->AddPage();
 
-    //     $pdf->Write(5, 'Some sample text');
+        $pdf->Write(5, 'Some sample text');
 
-    //     $pdf->Output('My-File-Name.pdf', 'I');
-    // }
+        $pdf->Output('My-File-Name.pdf', 'I');
+    }
 
 }

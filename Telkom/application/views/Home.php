@@ -25,10 +25,13 @@ var renew = setInterval(function(){
 					<div class="nav-fostrap">
 						<ul>
 							<li><a href='<?php echo site_url('welcome/home'); ?>'>Home</a></li>
-							<li><a href='<?php echo site_url('welcome/history'); ?>'>History Peminjaman
-                                </a>   
+							<li><a href="javascript:void(0)">History<span class="arrow-down"></span></a>
+                                   <ul class="dropdown">
+									<li><a href="<?php echo site_url('welcome/history_terima')?>">History Terima</a></li>
+									<li><a href="<?php echo site_url('welcome/history_tolak')?>">History Tolak</a></li>
+                                </ul>
 							</li>
-                            <li><a href='<?php echo site_url('#'); ?>'>KBM Kembali
+                            <li><a href='<?php echo site_url('welcome/status_peminjaman_admin'); ?>'>KBM Kembali
                                 </a>   
 							</li>
 							<li><a href='<?php echo site_url('welcome/peminjaman') ?>'>

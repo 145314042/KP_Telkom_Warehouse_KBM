@@ -2,9 +2,9 @@
 
 class Kbm_model extends CI_Model {
 
-    public function insertRent($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $tanggalKembali, $waktuKembali, $pemberi, $status)
+    public function insertRent($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $tanggalKembali, $waktuKembali, $pemberi, $status)
     {
-        $result = $this->db->simple_query('INSERT INTO kbm_peminjaman_mobil (NomorPolisi, Peminjam, NomorTelepon, Keperluan, Durasi, TanggalPinjam, WaktuPinjam, TanggalKembali, WaktuKembali, Pemberi, Status) VALUES("'.$nomorPolisi.'", "'.$peminjam.'", "'.$nomorTelepon.'", "'.$keperluan.'", "'.$durasi.'", "'.$tanggalPinjam.'", "'.$waktuPinjam.'", "'.$tanggalKembali.'", "'.$waktuKembali.'", "'.$pemberi.'", '.$status.')');
+        $result = $this->db->simple_query('INSERT INTO kbm_peminjaman_mobil (NomorPolisi, Peminjam, NIK, NomorTelepon, Keperluan, KMAmbil, KMKembali, Durasi, TanggalPinjam, WaktuPinjam, WaktuAmbil, TanggalKembali, WaktuKembali, Pemberi, Status) VALUES("'.$nomorPolisi.'", "'.$peminjam.'", "'.$nik.'", "'.$nomorTelepon.'", "'.$keperluan.'", "'.$kmAmbil.'", "'.$kmKembali.'", "'.$durasi.'", "'.$tanggalPinjam.'", "'.$waktuPinjam.'", "'.$waktuAmbil.'", "'.$tanggalKembali.'", "'.$waktuKembali.'", "'.$pemberi.'", '.$status.')');
         if ($result)
         {
             return '1';
@@ -24,15 +24,18 @@ class Kbm_model extends CI_Model {
         
     }
 
-    public function approveBooking($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
+    public function approveBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
     {
         $data = array(
             'Pemberi' => $pemberi,
-            'Status' => 2
+            'Status' => 2,
+            'WaktuAmbil' => $this->getLocalTime(),
+            'KMAmbil' => $kmAmbil
         );
         $this->db->set($data);
         $this->db->where('NomorPolisi',$nomorPolisi);
         $this->db->where('Peminjam',$peminjam);
+        $this->db->where('NIK',$nik);
         $this->db->where('NomorTelepon',$nomorTelepon);
         $this->db->where('Keperluan',$keperluan);
         $this->db->where('Durasi',$durasi);
@@ -42,7 +45,7 @@ class Kbm_model extends CI_Model {
         $result = $this->db->update('kbm_peminjaman_mobil');
         if ($result)
         {
-            $r = $this->kbm_model->declineBookingAuto($nomorPolisi, $pemberi);
+            // $r = $this->kbm_model->declineBookingAuto($nomorPolisi, $pemberi);
             $this->carHired($nomorPolisi);
             return '1';
         }
@@ -52,31 +55,33 @@ class Kbm_model extends CI_Model {
         }
     }
 
-    public function declineBookingAuto($nomorPolisi, $pemberi)
-    {
-        $data = array(
-            'Pemberi' => $pemberi,
-            'Status' => -1
-        );
-        $this->db->set($data);
-        $this->db->where('Status',0);
-        $this->db->where('NomorPolisi',$nomorPolisi);
-        $result = $this->db->update('kbm_peminjaman_mobil');
-        $this->carHired($nomorPolisi);
-        if ($result)
-        {
-            return '1';
-        }
-        else
-        {
-            return '0';
-        }
-    }
+    // public function declineBookingAuto($nomorPolisi, $pemberi)
+    // {
+    //     $data = array(
+    //         'Pemberi' => $pemberi,
+    //         'KMAmbil' => $kmAmbil,
+    //         'Status' => -1
+    //     );
+    //     $this->db->set($data);
+    //     $this->db->where('Status',0);
+    //     $this->db->where('NomorPolisi',$nomorPolisi);
+    //     $result = $this->db->update('kbm_peminjaman_mobil');
+    //     $this->carHired($nomorPolisi);
+    //     if ($result)
+    //     {
+    //         return '1';
+    //     }
+    //     else
+    //     {
+    //         return '0';
+    //     }
+    // }
 
-    public function declineBooking($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
+    public function declineBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
     {
         $data = array(
             'Pemberi' => $pemberi,
+            'WaktuAmbil' => $this->getLocalTime(),
             'Status' => -1
         );
         $this->db->set($data);
@@ -106,21 +111,24 @@ class Kbm_model extends CI_Model {
         return $query->result();
     }
 
-    public function carReturning($nomorPolisi, $peminjam, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
+    public function carReturning($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi)
     {
         $data = array(
             'TanggalKembali' => $this->getLocalDate(),
             'WaktuKembali' => $this->getLocalTime(),
+            'KMKembali' => $kmKembali,
             'Status' => 1
         );
         $this->db->set($data);
         $this->db->where('NomorPolisi',$nomorPolisi);
         $this->db->where('Peminjam',$peminjam);
+        $this->db->where('NIK',$nik);
         $this->db->where('NomorTelepon',$nomorTelepon);
         $this->db->where('Keperluan',$keperluan);
         $this->db->where('Durasi',$durasi);
         $this->db->where('TanggalPinjam',$tanggalPinjam);
         $this->db->where('WaktuPinjam',$waktuPinjam);
+        $this->db->where('WaktuAmbil',$waktuAmbil);
         $this->db->where('Pemberi',$pemberi);
         $this->db->where('Status',2);
         $result = $this->db->update('kbm_peminjaman_mobil');
@@ -135,8 +143,16 @@ class Kbm_model extends CI_Model {
         }
     }
 
-    public function showHistory()
+    public function showHistoryApprove()
     {
+        $this->db->where('status',1);
+        $query = $this->db->get('kbm_peminjaman_mobil');
+        return $query->result();
+    }
+
+    public function showHistoryDisapprove()
+    {
+        $this->db->where('status',-1);
         $query = $this->db->get('kbm_peminjaman_mobil');
         return $query->result();
     }

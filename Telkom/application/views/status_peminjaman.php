@@ -19,22 +19,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <table style="width:80%;text-align:center;">
   <tr>
     <th>Peminjam</th>
+    <th>NIK</th>
+    <th>Nomor Telepon</th>
     <th>Mobil</th> 
     <th>Keperluan</th>
-    <th>Durasi</th>
+    <th>Durasi (Jam)</th>
     <th>Tanggal Pinjam</th>
     <th>Waktu Pinjam</th>
-    <th>Pemberi</th>
+    <th>Waktu Ambil</th>
   </tr>
   <?php foreach ($showRent as $row): ?>
+    <?php
+    $Peminjam = $row->Peminjam;
+    $Nik = $row->NIK;
+    $NomorTelepon = $row->NomorTelepon;
+    $NomorPolisi = $row->NomorPolisi;
+    $Keperluan = $row->Keperluan;
+    $Durasi = $row->Durasi;
+    $TanggalPinjam = $row->TanggalPinjam;
+    $WaktuPinjam = $row->WaktuPinjam;
+    $WaktuAmbil = $row->WaktuAmbil;
+    ?>
     <tr>
-      <td><?php echo $row->Peminjam;?></td>
-      <td><?php echo $row->NomorPolisi;?></td>
-      <td><?php echo $row->Keperluan;?></td>
-      <td><?php echo $row->Durasi;?></td>
-      <td><?php echo $row->TanggalPinjam;?></td>
-      <td><?php echo $row->WaktuPinjam;?></td>
-      <td><?php echo $row->Pemberi;?></td>
+      <td><?php echo $Peminjam;?></td>
+      <td><?php echo $Nik;?></td>
+      <td><?php echo $NomorTelepon;?></td>
+      <td><?php echo $NomorPolisi;?></td>
+      <td><?php echo $Keperluan;?></td>
+      <td><?php echo $Durasi;?></td>
+      <td><?php echo $TanggalPinjam;?></td>
+      <td><?php echo $WaktuPinjam;?></td>
+      <td><?php echo $WaktuAmbil;?></td>     
     </tr>
     
   <?php endforeach ?>

@@ -23,6 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <p style="color:#ff1a1a;"><?php echo $this->session->flashdata('err') ?></p>
   		</div>
 	</div>
+  <a href="<?php echo site_url('welcome/index');?>"><button type="button">Kembali</button></a>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/login.js"></script>
 </body>
 </html>
