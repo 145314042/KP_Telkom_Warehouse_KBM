@@ -145,6 +145,7 @@ class Kbm_model extends CI_Model {
 
     public function showHistoryApprove()
     {
+        $this->db->select('*');
         $this->db->where('status',1);
         $query = $this->db->get('kbm_peminjaman_mobil');
         return $query->result();
@@ -152,6 +153,7 @@ class Kbm_model extends CI_Model {
 
     public function showHistoryDisapprove()
     {
+        $this->db->select('*');
         $this->db->where('status',-1);
         $query = $this->db->get('kbm_peminjaman_mobil');
         return $query->result();

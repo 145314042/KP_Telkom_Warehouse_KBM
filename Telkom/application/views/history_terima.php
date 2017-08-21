@@ -77,6 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </tr>
   <?php endforeach ?>
 </table>
+<a href="<?php echo site_url('welcome/export_history_terima'); ?>">Export to Excel</a>
 <br><br><br>
 <br><br><br>
                   <div class="button">

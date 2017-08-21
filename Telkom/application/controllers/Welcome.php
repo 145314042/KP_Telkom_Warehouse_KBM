@@ -215,6 +215,25 @@ class Welcome extends CI_Controller {
         $this->load->view('history_tolak',$data);
     }
 
+    //export to excel
+    public function export_history_terima()
+    {
+        $result = $this->kbm_model->showHistoryApprove();
+        // $data['showHistoryApprove'] = $result;
+        $data = array( 'title' => 'History KBM diizinkan',
+                'buku' => $result);
+        $this->load->view('report_approve',$data);
+    }
+
+    public function export_history_tolak()
+    {
+        $result = $this->kbm_model->showHistoryDisapprove();
+        // $data['showHistoryDisapprove'] = $result;
+        $data = array( 'title' => 'History KBM tidak diizinkan',
+                'buku' => $result);
+        $this->load->view('report_disapprove',$data);
+    }
+
     public function peminjaman()
     {
         $result = $this->kbm_model->showBooking();
@@ -230,23 +249,23 @@ class Welcome extends CI_Controller {
 
    //Export PDF
 
-    public function toPdf(){
-        $this->load->library('Pdf');
+    // public function toPdf(){
+    //     $this->load->library('Pdf');
 
-        $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetTitle('My Title');
-        $pdf->SetHeaderMargin(30);
-        $pdf->SetTopMargin(20);
-        $pdf->setFooterMargin(20);
-        $pdf->SetAutoPageBreak(true);
-        $pdf->SetAuthor('Author');
-        $pdf->SetDisplayMode('real', 'default');
+    //     $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+    //     $pdf->SetTitle('My Title');
+    //     $pdf->SetHeaderMargin(30);
+    //     $pdf->SetTopMargin(20);
+    //     $pdf->setFooterMargin(20);
+    //     $pdf->SetAutoPageBreak(true);
+    //     $pdf->SetAuthor('Author');
+    //     $pdf->SetDisplayMode('real', 'default');
 
-        $pdf->AddPage();
+    //     $pdf->AddPage();
 
-        $pdf->Write(5, 'Some sample text');
+    //     $pdf->Write(5, 'Some sample text');
 
-        $pdf->Output('My-File-Name.pdf', 'I');
-    }
+    //     $pdf->Output('My-File-Name.pdf', 'I');
+    // }
 
 }
