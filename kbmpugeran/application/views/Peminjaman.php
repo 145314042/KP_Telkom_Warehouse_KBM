@@ -16,23 +16,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h1>KBM TELKOM AKSES</h1>
                 </div>
                 <center>
-                <table style="width:80%;text-align:center;">
+                 
+                <table style="width:90%;text-align:center;">
   <tr>
     <th>Peminjam</th>
     <th>NIK</th>
+    <th>Nomor SIM</th>
     <th>Nomor Telepon</th>
     <th>Mobil</th> 
     <th>Keperluan</th>
     <th>Durasi (Jam)</th>
     <th>Tanggal Pinjam</th>
     <th>Waktu Pinjam</th>
-    <th>KM Ambil</th>
     <th>Aksi</th>
   </tr>
   <?php foreach ($showBooking as $row): ?>
     <?php
     $Peminjam = $row->Peminjam;
     $NIK = $row->NIK;
+    $NomorSIM = $row->NomorSIM;
     $NomorTelepon = $row->NomorTelepon;
     $NomorPolisi = $row->NomorPolisi;
     $Keperluan = $row->Keperluan;
@@ -44,18 +46,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <tr>
       <td><?php echo $Peminjam;?></td>
       <td><?php echo $NIK;?></td>
+      <td><?php echo $NomorSIM;?></td>
       <td><?php echo $NomorTelepon;?></td>
       <td><?php echo $NomorPolisi;?></td>
       <td><?php echo $Keperluan;?></td>
       <td><?php echo $Durasi;?></td>
       <td><?php echo $TanggalPinjam;?></td>
-      <td><?php echo $WaktuPinjam;?></td>
+      <td><?php echo $WaktuPinjam;?></td>    
       <td>
           <form method="POST" action='<?php echo site_url('welcome/kbm_approve_booking') ?>'>
-              <?php echo '<input placeholder="KM Ambil" type="text" pattern="[0-9]*" name="kmAmbil" title="Hanya boleh angka" required>';?>
+              <?php echo '<input placeholder="KM Ambil" type="text" pattern="[0-9]*" name="kmAmbil" title="Hanya boleh angka" required>';?><br><br>
               <?php echo '<input type="hidden" name="nomorPolisi" value="'.$NomorPolisi.'">';?>
               <?php echo '<input type="hidden" name="peminjam" value="'.$Peminjam.'">';?>
               <?php echo '<input type="hidden" name="nik" value="'.$NIK.'">';?>
+              <?php echo '<input type="hidden" name="nomorSim" value="'.$NomorSIM.'">';?>
               <?php echo '<input type="hidden" name="nomorTelepon" value="'.$NomorTelepon.'">';?>
               <?php echo '<input type="hidden" name="keperluan" value="'.$Keperluan.'">';?>
               <?php echo '<input type="hidden" name="durasi" value="'.$Durasi.'">';?>
@@ -63,11 +67,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php echo '<input type="hidden" name="waktuPinjam" value="'.$WaktuPinjam.'">';?>
               <?php echo '<input type="hidden" name="pemberi" value="'.$Pemberi.'">';?>
               <input type="submit" value="Izinkan">
-          </form>
+          </form><br>
           <form method="POST" action='<?php echo site_url('welcome/kbm_decline_booking') ?>'>
               <?php echo '<input type="hidden" name="nomorPolisi" value="'.$NomorPolisi.'">';?>
               <?php echo '<input type="hidden" name="peminjam" value="'.$Peminjam.'">';?>
               <?php echo '<input type="hidden" name="nik" value="'.$NIK.'">';?>
+              <?php echo '<input type="hidden" name="nomorSim" value="'.$NomorSIM.'">';?>
               <?php echo '<input type="hidden" name="nomorTelepon" value="'.$NomorTelepon.'">';?>
               <?php echo '<input type="hidden" name="keperluan" value="'.$Keperluan.'">';?>
               <?php echo '<input type="hidden" name="durasi" value="'.$Durasi.'">';?>
@@ -75,12 +80,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php echo '<input type="hidden" name="waktuPinjam" value="'.$WaktuPinjam.'">';?>
               <?php echo '<input type="hidden" name="pemberi" value="'.$Pemberi.'">';?>
               <input type="submit" value="Tolak">
-          </form>
-      </td>
+          </form></td>
+      
     </tr>
     
   <?php endforeach ?>
 </table>
+                    
 <br><br><br>
 <br><br><br>
                   <div class="button">

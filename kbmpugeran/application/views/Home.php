@@ -31,7 +31,7 @@ var renew = setInterval(function(){
 									<li><a href="<?php echo site_url('welcome/history_tolak')?>">History Tolak</a></li>
                                 </ul>
 							</li>
-                            <li><a href='<?php echo site_url('welcome/status_peminjaman_admin'); ?>'>KBM Kembali
+                            <li><a href='<?php echo site_url('welcome/kbm_kembali'); ?>'>KBM Kembali
                                 </a>   
 							</li>
 							<li><a href='<?php echo site_url('welcome/peminjaman') ?>'>

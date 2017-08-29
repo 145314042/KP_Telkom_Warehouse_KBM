@@ -20,6 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <tr>
     <th>Peminjam</th>
     <th>NIK</th>
+    <th>Nomor SIM</th>
     <th>Nomor Telepon</th>
     <th>Mobil</th> 
     <th>Keperluan</th>
@@ -34,6 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php
     $Peminjam = $row->Peminjam;
     $Nik = $row->NIK;
+    $NomorSIM = $row->NomorSIM;
     $NomorTelepon = $row->NomorTelepon;
     $NomorPolisi = $row->NomorPolisi;
     $Keperluan = $row->Keperluan;
@@ -46,6 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <tr>
       <td><?php echo $Peminjam;?></td>
       <td><?php echo $Nik;?></td>
+      <td><?php echo $NomorSIM;?></td>
       <td><?php echo $NomorTelepon;?></td>
       <td><?php echo $NomorPolisi;?></td>
       <td><?php echo $Keperluan;?></td>
@@ -59,6 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <?php echo '<input placeholder="KM Kembali" type="text" pattern="[0-9]*" name="kmKembali" title="Hanya boleh angka" required>';?>
           <?php echo '<input type="hidden" name="nomorPolisi" value="'.$NomorPolisi.'">';?>
           <?php echo '<input type="hidden" name="nik" value="'.$Nik.'">';?>
+          <?php echo '<input type="hidden" name="nomorSim" value="'.$NomorSIM.'">';?>
           <?php echo '<input type="hidden" name="peminjam" value="'.$Peminjam.'">';?>
           <?php echo '<input type="hidden" name="nomorTelepon" value="'.$NomorTelepon.'">';?>
           <?php echo '<input type="hidden" name="keperluan" value="'.$Keperluan.'">';?>
@@ -77,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <br><br><br>
 <br><br><br>
                   <div class="button">
-        <a class="user-friendly" href='<?php echo site_url('welcome/home'); ?>'>Kembali</a>
+        <a class="user-friendly" href='<?php echo site_url(''); ?>'>Kembali</a>
           <div class="background"></div>
                     </div></center>
 			</div>

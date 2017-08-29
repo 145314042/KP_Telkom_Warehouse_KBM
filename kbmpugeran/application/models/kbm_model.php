@@ -2,9 +2,9 @@
 
 class Kbm_model extends CI_Model {
 
-    public function insertRent($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $tanggalKembali, $waktuKembali, $pemberi, $status)
+    public function insertRent($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmAmbil, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $tanggalKembali, $waktuKembali, $pemberi, $status)
     {
-        $result = $this->db->simple_query('INSERT INTO kbm_peminjaman_mobil (NomorPolisi, Peminjam, NIK, NomorTelepon, Keperluan, KMAmbil, KMKembali, Durasi, TanggalPinjam, WaktuPinjam, WaktuAmbil, TanggalKembali, WaktuKembali, Pemberi, Status) VALUES("'.$nomorPolisi.'", "'.$peminjam.'", "'.$nik.'", "'.$nomorTelepon.'", "'.$keperluan.'", "'.$kmAmbil.'", "'.$kmKembali.'", "'.$durasi.'", "'.$tanggalPinjam.'", "'.$waktuPinjam.'", "'.$waktuAmbil.'", "'.$tanggalKembali.'", "'.$waktuKembali.'", "'.$pemberi.'", '.$status.')');
+        $result = $this->db->simple_query('INSERT INTO kbm_peminjaman_mobil (NomorPolisi, Peminjam, NIK, NomorSIM, NomorTelepon, Keperluan, KMAmbil, KMKembali, Durasi, TanggalPinjam, WaktuPinjam, WaktuAmbil, TanggalKembali, WaktuKembali, Pemberi, Status) VALUES("'.$nomorPolisi.'", "'.$peminjam.'", "'.$nik.'", "'.$nomorSim.'", "'.$nomorTelepon.'", "'.$keperluan.'", "'.$kmAmbil.'", "'.$kmKembali.'", "'.$durasi.'", "'.$tanggalPinjam.'", "'.$waktuPinjam.'", "'.$waktuAmbil.'", "'.$tanggalKembali.'", "'.$waktuKembali.'", "'.$pemberi.'", '.$status.')');
         if ($result)
         {
             return '1';
@@ -24,7 +24,7 @@ class Kbm_model extends CI_Model {
         
     }
 
-    public function approveBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
+    public function approveBooking($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmAmbil, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
     {
         $data = array(
             'Pemberi' => $pemberi,
@@ -36,6 +36,7 @@ class Kbm_model extends CI_Model {
         $this->db->where('NomorPolisi',$nomorPolisi);
         $this->db->where('Peminjam',$peminjam);
         $this->db->where('NIK',$nik);
+        $this->db->where('NomorSIM',$nomorSim);
         $this->db->where('NomorTelepon',$nomorTelepon);
         $this->db->where('Keperluan',$keperluan);
         $this->db->where('Durasi',$durasi);
@@ -77,7 +78,7 @@ class Kbm_model extends CI_Model {
     //     }
     // }
 
-    public function declineBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
+    public function declineBooking($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi)
     {
         $data = array(
             'Pemberi' => $pemberi,
@@ -86,6 +87,8 @@ class Kbm_model extends CI_Model {
         );
         $this->db->set($data);
         $this->db->where('NomorPolisi',$nomorPolisi);
+        $this->db->where('NIK',$nik);
+        $this->db->where('NomorSIM',$nomorSim);
         $this->db->where('Peminjam',$peminjam);
         $this->db->where('NomorTelepon',$nomorTelepon);
         $this->db->where('Keperluan',$keperluan);
@@ -111,7 +114,7 @@ class Kbm_model extends CI_Model {
         return $query->result();
     }
 
-    public function carReturning($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi)
+    public function carReturning($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi)
     {
         $data = array(
             'TanggalKembali' => $this->getLocalDate(),
@@ -123,6 +126,7 @@ class Kbm_model extends CI_Model {
         $this->db->where('NomorPolisi',$nomorPolisi);
         $this->db->where('Peminjam',$peminjam);
         $this->db->where('NIK',$nik);
+        $this->db->where('NomorSIM',$nomorSim);
         $this->db->where('NomorTelepon',$nomorTelepon);
         $this->db->where('Keperluan',$keperluan);
         $this->db->where('Durasi',$durasi);

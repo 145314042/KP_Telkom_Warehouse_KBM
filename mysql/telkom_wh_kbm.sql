@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2017 at 03:11 AM
+-- Generation Time: Aug 29, 2017 at 02:15 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -19,10 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `telkom`
+-- Database: `telkom_wh_kbm`
 --
-CREATE DATABASE IF NOT EXISTS `telkom` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `telkom`;
+CREATE DATABASE IF NOT EXISTS `telkom_wh_kbm` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `telkom_wh_kbm`;
 
 -- --------------------------------------------------------
 
@@ -41,7 +41,7 @@ CREATE TABLE `kbm_mobil` (
 --
 
 INSERT INTO `kbm_mobil` (`NomorPolisi`, `NamaMobil`, `Status`) VALUES
-('B2735TFD', 'Nissan Evalia', 1),
+('B2735TFD', 'Nissan Evalia', 0),
 ('H9290GZ', 'Toyota Avanza', 1),
 ('H9308GZ', 'Toyota Avanza', 0);
 
@@ -55,6 +55,7 @@ CREATE TABLE `kbm_peminjaman_mobil` (
   `NomorPolisi` varchar(10) NOT NULL,
   `Peminjam` varchar(48) NOT NULL,
   `NIK` varchar(20) NOT NULL,
+  `NomorSIM` int(20) NOT NULL,
   `NomorTelepon` varchar(15) NOT NULL,
   `Keperluan` varchar(100) NOT NULL,
   `KMAmbil` int(11) NOT NULL,
@@ -68,15 +69,6 @@ CREATE TABLE `kbm_peminjaman_mobil` (
   `Pemberi` varchar(48) NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `kbm_peminjaman_mobil`
---
-
-INSERT INTO `kbm_peminjaman_mobil` (`NomorPolisi`, `Peminjam`, `NIK`, `NomorTelepon`, `Keperluan`, `KMAmbil`, `KMKembali`, `Durasi`, `TanggalPinjam`, `WaktuPinjam`, `WaktuAmbil`, `TanggalKembali`, `WaktuKembali`, `Pemberi`, `Status`) VALUES
-('B2735TFD', 'a', '1', '1', 'a', 1, 2, '2', '2017-08-19', '16:00:00', '22:46:10', '2017-08-19', '23:05:21', 'anonymous', 1),
-('H9290GZ', 'sugi', '1', '21', '2', 2, 11, '2', '2017-08-24', '08:00:00', '23:20:32', '2017-08-19', '23:23:01', 'anonymous', 1),
-('B2735TFD', 'a', '2', '2', '2', 0, 0, '2', '2017-08-26', '08:00:00', '23:20:34', '0000-00-00', '00:00:00', 'anonymous', -1);
 
 -- --------------------------------------------------------
 

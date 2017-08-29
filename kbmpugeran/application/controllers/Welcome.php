@@ -6,10 +6,11 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
         redirect('welcome/menu');
+//        $this->load->view('done_ijinkan');
 	}
 
     //login
-	public function login() 
+	public function login_admin() 
     {
         $username = $this->input->post('username',true);
         $password = $this->input->post('password',true);
@@ -23,8 +24,8 @@ class Welcome extends CI_Controller {
             redirect('welcome/home');
         }
         else{
-			$this->session->set_flashdata('err','Username or Password is wrong!'); 
-            redirect('welcome/log');
+			$this->session->set_flashdata('err','Username atau Password salah!'); 
+            redirect('welcome/login');
         }
     }
     public function logout()
@@ -44,6 +45,7 @@ class Welcome extends CI_Controller {
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
         $nik = $this->input->post('nik',true);
+        $nomorSim = $this->input->post('nomorSim',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
         $kmAmbil = '';
@@ -57,7 +59,7 @@ class Welcome extends CI_Controller {
         $pemberi = '';
         $status = 0;
         /*get result*/
-        $result = $this->kbm_model->insertRent($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $tanggalKembali, $waktuKembali, $pemberi, $status);
+        $result = $this->kbm_model->insertRent($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmAmbil, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $tanggalKembali, $waktuKembali, $pemberi, $status);
         if($result==1)
         {
             /*insert berhasil*/
@@ -76,6 +78,7 @@ class Welcome extends CI_Controller {
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
         $nik = $this->input->post('nik',true);
+        $nomorSim = $this->input->post('nomorSim',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
         $kmAmbil = $this->input->post('kmAmbil',true);
@@ -84,11 +87,11 @@ class Welcome extends CI_Controller {
         $waktuPinjam = $this->input->post('waktuPinjam',true);
         $pemberi = $this->input->post('pemberi',true);
         /*get result*/
-        $result = $this->kbm_model->approveBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmAmbil, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
+        $result = $this->kbm_model->approveBooking($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmAmbil, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
         if($result>0)
         {
             /*approve berhasil*/
-            redirect('welcome/Peminjaman');
+            redirect('welcome/done_ijinkan');
         }
         else
         {
@@ -103,6 +106,7 @@ class Welcome extends CI_Controller {
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
         $nik = $this->input->post('nik',true);
+        $nomorSim = $this->input->post('nomorSim',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
         $durasi = $this->input->post('durasi',true);
@@ -110,12 +114,12 @@ class Welcome extends CI_Controller {
         $waktuPinjam = $this->input->post('waktuPinjam',true);
         $pemberi = $this->input->post('pemberi',true);
         /*get result*/
-        $result = $this->kbm_model->declineBooking($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
+        $result = $this->kbm_model->declineBooking($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $pemberi);
 
         if($result>0)
         {
             /*approve berhasil*/
-            redirect('welcome/Peminjaman');
+            redirect('welcome/done_tolak');
         }
         else
         {
@@ -141,6 +145,7 @@ class Welcome extends CI_Controller {
         $nomorPolisi = $this->input->post('nomorPolisi',true);
         $peminjam = $this->input->post('peminjam',true);
         $nik = $this->input->post('nik',true);
+        $nomorSim = $this->input->post('nomorSim',true);
         $nomorTelepon = $this->input->post('nomorTelepon',true);
         $keperluan = $this->input->post('keperluan',true);
         $kmKembali = $this->input->post('kmKembali',true);
@@ -150,11 +155,11 @@ class Welcome extends CI_Controller {
         $waktuAmbil = $this->input->post('waktuAmbil',true);
         $pemberi = $this->input->post('pemberi',true);
         /*get result*/
-        $result = $this->kbm_model->carReturning($nomorPolisi, $peminjam, $nik, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi);
+        $result = $this->kbm_model->carReturning($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi);
         if($result==1)
         {
             /*insert berhasil*/
-            redirect('welcome/status_peminjaman_admin');
+            redirect('welcome/done_kembali');
         }
         else
         {
@@ -172,8 +177,11 @@ class Welcome extends CI_Controller {
     //Redirect link
     public function home(){$this->load->view('home');}
     public function done(){$this->load->view('done');}
+    public function done_ijinkan(){$this->load->view('done_ijinkan');}
+    public function done_tolak(){$this->load->view('done_tolak');}
+    public function done_kembali(){$this->load->view('done_kembali');}
     public function menu(){$this->load->view('menu');}
-    public function log(){$this->load->view('login');}
+    public function login(){$this->load->view('login');}
     
     public function status_peminjaman()
     {
@@ -185,7 +193,7 @@ class Welcome extends CI_Controller {
         // }
     }
 
-    public function status_peminjaman_admin()
+    public function kbm_kembali()
     {
         $result = $this->kbm_model->showRent();
         $data['showRent'] = $result;
@@ -240,7 +248,7 @@ class Welcome extends CI_Controller {
         $data['showBooking'] = $result;
         $this->load->view('Peminjaman',$data);/*di load ke admin >> yg akan di approve*/
     }
-    public function form_pinjam_kbm()
+    public function peminjaman_kbm()
     {
         $data['showCar'] = $this->kbm_model->showCar();
         $this->load->view('form_pinjam_kbm',$data);

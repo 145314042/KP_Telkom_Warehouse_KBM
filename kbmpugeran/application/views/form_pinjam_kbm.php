@@ -29,13 +29,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <h3>Form Peminjaman KBM</h3>
       <h4>Detail Peminjaman</h4>
       <fieldset>
-      <input placeholder="Nama" type="tel" tabindex="3" pattern="[A-Za-z\s]*" title="Hanya boleh huruf A-Z,a-z" name="peminjam" required>
+      <input placeholder="Nama" type="text" tabindex="3" pattern="[A-Za-z\s]*" title="Hanya boleh huruf A-Z,a-z" name="peminjam" autofocus required>
     </fieldset>
     <fieldset>
-      <input placeholder="NIK" type="text" pattern="[0-9]*" tabindex="3" name="nik" title="Hanya boleh angka" required>
+      <input placeholder="NIK" type="tel" pattern="[0-9]*" tabindex="3" name="nik" title="Hanya boleh angka" required>
+    </fieldset>
+    <fieldset>
+      <input placeholder="Nomor SIM" type="tel" pattern="[0-9]*" tabindex="3" name="nomorSim" title="Hanya boleh angka" required>
     </fieldset>
       <fieldset>
-      <input placeholder="No telepon" type="text" pattern="[0-9]*" tabindex="3" name="nomorTelepon" title="Hanya boleh angka" required>
+      <input placeholder="No telepon" type="tel" pattern="[0-9]*" tabindex="3" name="nomorTelepon" title="Hanya boleh angka" required>
     </fieldset>
     <fieldset>Pilihan Kendaraan<br>
      <span class="custom-dropdown big" style="margin-left:0.5%;">
@@ -48,15 +51,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </span>
       </fieldset>
       <fieldset>
-      <input type="text" id="datepicker" name="tanggalPinjam" placeholder="Tanggal pinjam">
+      <input type="text" id="datepicker" name="tanggalPinjam" placeholder="Tanggal pinjam" required>
     </fieldset>
-      <fieldset><input type="text" pattern="[0-9]*" name="durasi" placeholder="Durasi peminjaman (dalam jam)" title="Hanya boleh angka" required>
+      <fieldset><input type="tel" pattern="[0-9]*" name="durasi" placeholder="Durasi peminjaman (dalam jam)" title="Hanya boleh angka" required>
           
     </fieldset>
       <fieldset>Waktu Pinjam
     <span class="custom-dropdown big" style="margin-left:0.5%;">
         <h4>Jam : Menit </h4>
-        <select name="waktuPinjam_jam">
+        <select name="waktuPinjam_jam" >
         <?php for($i=8;$i<24;$i++){
     echo '<option value="'.$i.'">'.$i.'</option>';
 }?></select>
@@ -68,13 +71,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </fieldset>
    
     <fieldset>
-      <textarea placeholder="Keperluan" tabindex="5" name="keperluan"></textarea>
+      <textarea placeholder="Keperluan" tabindex="5" name="keperluan" required></textarea>
     </fieldset>
     <fieldset>
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
     </fieldset>
     </form>
-    <form id="contact" action="<?php echo site_url('welcome/index'); ?>" method="post">
+    <form id="contact" action="<?php echo site_url(''); ?>" method="post">
       <fieldset>
       <button name="submit" type="submit" id="back" data-submit="...Sending">Kembali</button>
     </fieldset>

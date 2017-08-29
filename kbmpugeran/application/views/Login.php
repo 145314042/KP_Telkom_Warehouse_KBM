@@ -14,16 +14,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <div class="login-page" style="margin-top:-10%;">
       <div class="form">
-            <form class="login-form" action="<?php echo site_url('welcome/login') ?>" method="POST">
-              	<input name="username" type="text" placeholder="username"/>
-              	<input name="password" type="password" placeholder="password"/>
+          <p style="color:#ff1a1a;"><?php echo $this->session->flashdata('err') ?></p>
+            <form class="login-form" action="<?php echo site_url('welcome/login_admin') ?>" method="POST">
+              	<input name="username" type="text" placeholder="username"/ required autofocus>
+              	<input name="password" type="password" placeholder="password"/ required>
               	<button>login</button>
 <!--              	<p class="message">Not registered? <a href="#">Create an account</a></p>-->
-            </form>
-          <p style="color:#ff1a1a;"><?php echo $this->session->flashdata('err') ?></p>
+            </form><br>
+          
+          <form class="back" action="<?php echo site_url('') ?>" method="POST">
+          <button>Kembali</button>
+          </form>
   		</div>
 	</div>
-  <a href="<?php echo site_url('welcome/index');?>"><button type="button">Kembali</button></a>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/login.js"></script>
 </body>
 </html>

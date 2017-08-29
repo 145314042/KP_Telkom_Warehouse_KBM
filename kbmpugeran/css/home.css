@@ -398,10 +398,11 @@ button:hover {
 table,th,td{
     border-collapse: collapse;
     padding: 10px;
-    table-layout: fixed;
+    overflow-x: auto;
 }
 th{
     border: 1px solid #b3b3b3;
     border-left: none;
     border-right: none;
+
 }

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html>
 <head>
 <meta charset="utf-8">
-<title>Peminjaman</title>
+<title>History</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/home.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/menu.css">
 </head>
@@ -22,6 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <tr>
     <th>Peminjam</th>
     <th>NIK</th>
+    <th>Nomor SIM</th>
     <th>Nomor Telepon</th>
     <th>Mobil</th> 
     <th>Keperluan</th>
@@ -35,6 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php
     $Peminjam = $row->Peminjam;
     $Nik = $row->NIK;
+    $NomorSIM = $row->NomorSIM;
     $NomorTelepon = $row->NomorTelepon;
     $NomorPolisi = $row->NomorPolisi;
     $Keperluan = $row->Keperluan;
@@ -47,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <tr>
       <td><?php echo $Peminjam;?></td>
       <td><?php echo $Nik;?></td>
+      <td><?php echo $NomorSIM;?></td>
       <td><?php echo $NomorTelepon;?></td>
       <td><?php echo $NomorPolisi;?></td>
       <td><?php echo $Keperluan;?></td>
@@ -62,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <br><br><br>
 <br><br><br>
                   <div class="button">
-        <a class="user-friendly" href='<?php echo site_url('welcome/home'); ?>'>Kembali</a>
+        <a class="user-friendly" href='<?php echo site_url(''); ?>'>Kembali</a>
           <div class="background"></div>
                     </div></center>
 			</div>

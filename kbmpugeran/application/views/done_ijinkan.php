@@ -11,9 +11,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <img src="<?php echo base_url('/w1.png'); ?>" style="width: 15%;margin-bottom:15px"/>
             
         </div>
-        <center><h1 style="font-size: 250%;font-family:helvetica;color:#666666;">Peminjaman Sukses!</h1></center>
+        <center><h1 style="font-size: 250%;font-family:helvetica;color:#666666;">Peminjaman diizinkan</h1></center>
         
-              	<center><a href="<?php echo site_url('welcome/index') ?>"><button id="">Kembali</button></a></center>
+              	<center><a href="<?php echo site_url('welcome/peminjaman') ?>"><button id="">OK</button></a></center>
+        <br><br>
+                <center><a href="<?php echo site_url('welcome/status_peminjaman_admin') ?>"><button id="">Lihat KBM dipinjam</button></a></center>
               
         
     </body>

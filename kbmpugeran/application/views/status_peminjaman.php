@@ -20,6 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <tr>
     <th>Peminjam</th>
     <th>NIK</th>
+    <th>Nomor SIM</th>
     <th>Nomor Telepon</th>
     <th>Mobil</th> 
     <th>Keperluan</th>
@@ -32,6 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php
     $Peminjam = $row->Peminjam;
     $Nik = $row->NIK;
+    $NomorSIM = $row->NomorSIM;
     $NomorTelepon = $row->NomorTelepon;
     $NomorPolisi = $row->NomorPolisi;
     $Keperluan = $row->Keperluan;
@@ -43,6 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <tr>
       <td><?php echo $Peminjam;?></td>
       <td><?php echo $Nik;?></td>
+      <td><?php echo $NomorSIM;?></td>
       <td><?php echo $NomorTelepon;?></td>
       <td><?php echo $NomorPolisi;?></td>
       <td><?php echo $Keperluan;?></td>
