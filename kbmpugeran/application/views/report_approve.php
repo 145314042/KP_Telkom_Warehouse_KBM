@@ -1,12 +1,17 @@
 <?php
  
- header("Content-type: application/vnd-ms-excel");
+ header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
  
- header("Content-Disposition: attachment; filename=$title.xls");
+ // header("Content-type: application/vnd-ms-excel");
+ // header("Content-type: application/excel");
+
+ header('Content-Disposition: attachment; filename="History KBM diizinkan.xlsx"');
  
- header("Pragma: no-cache");
+ // header("Cache-Control:max-age=0");
+
+ // header("Pragma: no-cache");
  
- header("Expires: 0");
+ // header("Expires: 0");
  
  ?>
  

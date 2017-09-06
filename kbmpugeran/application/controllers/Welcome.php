@@ -154,18 +154,25 @@ class Welcome extends CI_Controller {
         $waktuPinjam = $this->input->post('waktuPinjam',true);
         $waktuAmbil = $this->input->post('waktuAmbil',true);
         $pemberi = $this->input->post('pemberi',true);
+        /*check KM*/
+        $tempKM=$this->kbm_model->getKm($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi);
+        if ($tempKM<$kmKembali) {
+            $result = $this->kbm_model->carReturning($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi);
+            if($result==1)
+            {
+                /*insert berhasil*/
+                redirect('welcome/done_kembali');
+            }
+            else
+            {
+                /*insert gagal*/
+                redirect('welcome/home');
+            }
+        }else{
+            $this->session->set_flashdata('km','KM Kembali tidak valid!');
+            redirect('welcome/kbm_kembali');
+        }
         /*get result*/
-        $result = $this->kbm_model->carReturning($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $kmKembali, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi);
-        if($result==1)
-        {
-            /*insert berhasil*/
-            redirect('welcome/done_kembali');
-        }
-        else
-        {
-            /*insert gagal*/
-            redirect('welcome/home');
-        }
     }
 
     //menampilkan jumlah permintaan booking
@@ -226,20 +233,114 @@ class Welcome extends CI_Controller {
     //export to excel
     public function export_history_terima()
     {
+        // $result = $this->kbm_model->showHistoryApprove();
+        // // $data['showHistoryApprove'] = $result;
+        // $data = array( 'title' => 'History KBM diizinkan',
+        //         'buku' => $result);
+        // $this->load->view('report_approve',$data);
+    ///////////////////////////////////////
+
+        $this->load->library('excel');
+        
+        //create object
+        $object = new PHPExcel();
+
+        //insert data
+        $object->setActiveSheetIndex(0);
+
+        $table_columns = array('Peminjam','NIK','Nomor SIM','Nomor Telepon','Mobil','Keperluan','KM Ambil','KM Kembali','Durasi (Jam)','Tanggal Pinjam','Waktu Pinjam','Waktu Ambil','Tanggal Kembali','Waktu Kembali','Pemberi');
+
+        $column = 0;
+
+        foreach($table_columns as $field)
+        {
+            $object->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
+            $column++;
+        }
+
         $result = $this->kbm_model->showHistoryApprove();
-        // $data['showHistoryApprove'] = $result;
-        $data = array( 'title' => 'History KBM diizinkan',
-                'buku' => $result);
-        $this->load->view('report_approve',$data);
+
+        $excel_row = 2;
+
+        foreach($result as $row)
+        {
+            $object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, $row->Peminjam);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(1, $excel_row, $row->NIK);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(2, $excel_row, $row->NomorSIM);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, $row->NomorTelepon);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(4, $excel_row, $row->NomorPolisi);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(5, $excel_row, $row->Keperluan);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(6, $excel_row, $row->KMAmbil);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(7, $excel_row, $row->KMKembali);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(8, $excel_row, $row->Durasi);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(9, $excel_row, $row->TanggalPinjam);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(10, $excel_row, $row->WaktuPinjam);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(11, $excel_row, $row->WaktuAmbil);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(12, $excel_row, $row->TanggalKembali);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(13, $excel_row, $row->WaktuKembali);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(14, $excel_row, $row->Pemberi);
+            $excel_row++;
+        }
+
+        //write to file
+        $object_writer = PHPExcel_IOFactory::createWriter($object, 'Excel5');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="History KBM diizinkan.xlsx"');
+        $object_writer->save('php://output');
     }
 
     public function export_history_tolak()
     {
+        // $result = $this->kbm_model->showHistoryDisapprove();
+        // // $data['showHistoryDisapprove'] = $result;
+        // $data = array( 'title' => 'History KBM tidak diizinkan',
+        //         'buku' => $result);
+        // $this->load->view('report_disapprove',$data);
+///////////////////////////////////////////
+
+        $this->load->library('excel');
+        
+        //create object
+        $object = new PHPExcel();
+
+        //insert data
+        $object->setActiveSheetIndex(0);
+
+        $table_columns = array('Peminjam','NIK','Nomor SIM','Nomor Telepon','Mobil','Keperluan','Durasi (Jam)','Tanggal Pinjam','Waktu Pinjam','Waktu Tolak','Petugas');
+
+        $column = 0;
+
+        foreach($table_columns as $field)
+        {
+            $object->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
+            $column++;
+        }
+
         $result = $this->kbm_model->showHistoryDisapprove();
-        // $data['showHistoryDisapprove'] = $result;
-        $data = array( 'title' => 'History KBM tidak diizinkan',
-                'buku' => $result);
-        $this->load->view('report_disapprove',$data);
+
+        $excel_row = 2;
+
+        foreach($result as $row)
+        {
+            $object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, $row->Peminjam);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(1, $excel_row, $row->NIK);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(2, $excel_row, $row->NomorSIM);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, $row->NomorTelepon);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(4, $excel_row, $row->NomorPolisi);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(5, $excel_row, $row->Keperluan);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(6, $excel_row, $row->Durasi);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(7, $excel_row, $row->TanggalPinjam);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(8, $excel_row, $row->WaktuPinjam);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(9, $excel_row, $row->WaktuAmbil);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(10, $excel_row, $row->Pemberi);
+            $excel_row++;
+        }
+
+        //write to file
+        $object_writer = PHPExcel_IOFactory::createWriter($object, 'Excel5');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="History KBM tidak diizinkan.xlsx"');
+        $object_writer->save('php://output');
     }
 
     public function peminjaman()
@@ -253,7 +354,6 @@ class Welcome extends CI_Controller {
         $data['showCar'] = $this->kbm_model->showCar();
         $this->load->view('form_pinjam_kbm',$data);
     }
-
 
    //Export PDF
 

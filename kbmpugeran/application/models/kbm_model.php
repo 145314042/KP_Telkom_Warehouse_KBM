@@ -147,6 +147,29 @@ class Kbm_model extends CI_Model {
         }
     }
 
+    public function getKm($nomorPolisi, $peminjam, $nik, $nomorSim, $nomorTelepon, $keperluan, $durasi, $tanggalPinjam, $waktuPinjam, $waktuAmbil, $pemberi)
+    {
+        $this->db->select('KmAmbil');
+        $this->db->where('NomorPolisi',$nomorPolisi);
+        $this->db->where('Peminjam',$peminjam);
+        $this->db->where('NIK',$nik);
+        $this->db->where('NomorSIM',$nomorSim);
+        $this->db->where('NomorTelepon',$nomorTelepon);
+        $this->db->where('Keperluan',$keperluan);
+        $this->db->where('Durasi',$durasi);
+        $this->db->where('TanggalPinjam',$tanggalPinjam);
+        $this->db->where('WaktuPinjam',$waktuPinjam);
+        $this->db->where('WaktuAmbil',$waktuAmbil);
+        $this->db->where('Pemberi',$pemberi);
+        $this->db->where('Status',2);
+        $result = $this->db->get('kbm_peminjaman_mobil');
+        $this->carReady($nomorPolisi);
+        if ($result)
+        {
+            return $result->row('KmAmbil');
+        }
+    }
+
     public function showHistoryApprove()
     {
         $this->db->select('*');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2017 at 02:15 AM
+-- Generation Time: Sep 04, 2017 at 07:28 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -41,7 +41,7 @@ CREATE TABLE `kbm_mobil` (
 --
 
 INSERT INTO `kbm_mobil` (`NomorPolisi`, `NamaMobil`, `Status`) VALUES
-('B2735TFD', 'Nissan Evalia', 0),
+('B2735TFD', 'Nissan Evalia', 1),
 ('H9290GZ', 'Toyota Avanza', 1),
 ('H9308GZ', 'Toyota Avanza', 0);
 
@@ -69,6 +69,13 @@ CREATE TABLE `kbm_peminjaman_mobil` (
   `Pemberi` varchar(48) NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kbm_peminjaman_mobil`
+--
+
+INSERT INTO `kbm_peminjaman_mobil` (`NomorPolisi`, `Peminjam`, `NIK`, `NomorSIM`, `NomorTelepon`, `Keperluan`, `KMAmbil`, `KMKembali`, `Durasi`, `TanggalPinjam`, `WaktuPinjam`, `WaktuAmbil`, `TanggalKembali`, `WaktuKembali`, `Pemberi`, `Status`) VALUES
+('B2735TFD', 'a', '1', 2, '3', 'a', 1, 2, '1', '2017-09-13', '08:00:00', '06:36:30', '2017-09-04', '06:36:49', 'anonymous', 1);
 
 -- --------------------------------------------------------
 

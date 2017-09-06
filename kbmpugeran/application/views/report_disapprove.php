@@ -2,7 +2,7 @@
  
  header("Content-type: application/vnd-ms-excel");
  
- header("Content-Disposition: attachment; filename=$title.xls");
+header('Content-Disposition: attachment; filename="History KBM tidak diizinkan.xls"');
  
  header("Pragma: no-cache");
  

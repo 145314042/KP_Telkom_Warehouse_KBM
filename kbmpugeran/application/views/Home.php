@@ -13,7 +13,12 @@ var renew = setInterval(function(){
     document.getElementById("notif").src = links;        
   // alert("refreshed");
 },5000);
-</script></head>
+</script>
+<?php
+    if (!isset($_COOKIE['name'])) {
+        redirect(site_url('welcome/login'));
+    }
+    ?></head>
 	<body>
 		<div id="main">
 			<div class="container">

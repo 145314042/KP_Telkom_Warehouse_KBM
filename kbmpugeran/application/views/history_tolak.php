@@ -7,6 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <title>History</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/home.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/menu.css">
+    <?php
+    if (!isset($_COOKIE['name'])) {
+        redirect(site_url('welcome/login'));
+    }
+    ?>
 </head>
 	<body>
 		<div id="main">

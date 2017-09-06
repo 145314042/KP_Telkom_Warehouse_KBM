@@ -7,6 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <title>Peminjaman</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/home.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/menu.css">
+    <?php
+    if (!isset($_COOKIE['name'])) {
+        redirect(site_url('welcome/login'));
+    }
+    ?>
 </head>
 	<body>
 		<div id="main">
@@ -16,6 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<h1>KBM TELKOM AKSES</h1>
 				</div>
                 <center>
+                <p style="color:#ff1a1a;"><?php echo $this->session->flashdata('km') ?></p>
                 <table style="width:80%;text-align:center;">
   <tr>
     <th>Peminjam</th>
